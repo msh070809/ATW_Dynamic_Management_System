@@ -51,10 +51,7 @@ public class awsTest {
 					"location (~/.aws/credentials), and is in valid format.",
 					e);
 		}
-		ec2 = AmazonEC2ClientBuilder.standard()
-			.withCredentials(credentialsProvider)
-			.withRegion("us-east-1")	/* check the region at AWS console */
-			.build();
+		ec2 = AmazonEC2ClientBuilder.standard().withRegion("us-east-1").withCredentials(credentialsProvider).build();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -202,8 +199,10 @@ public class awsTest {
 			AvailabilityZone zone;
 			while(iterator.hasNext()) {
 				zone = iterator.next();
-				//System.out.printf("[id] %s,  [region] %15s, [zone] %15s\n", zone.getZoneId(), zone.getRegionName(), zone.getZoneName());
-				//.getZoneId() is not worked
+				System.out.printf("[region] %15s, [zone] %15s\n", zone.getRegionName(), zone.getZoneName());
+				//.getZoneId() was not supported, so I looked up related documents, 
+				//but the document said it was supported, but the feature was not available.
+				//https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/ec2/model/AvailabilityZone.html
 			}
 			System.out.println("You have access to " + availabilityZonesResult.getAvailabilityZones().size() +
 					" Availability Zones.");
